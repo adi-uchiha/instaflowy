@@ -6,6 +6,8 @@ import Items from './items'
 import { Separator } from '@/components/ui/separator'
 import ClerkAuthState from '../clerk-auth-state'
 import { Info } from 'lucide-react'
+import UpgradeCard from './upgrade'
+import { SubscriptionPlan } from '../subscription-plan'
 
 type Props = {
 	slug: string
@@ -38,6 +40,11 @@ const Sidebar = ({ slug }: Props) => {
 					<p className='text-[#9B9CA0]'>Help</p>
 					</div>
 				</div>
+				<SubscriptionPlan >
+					<div className='flex flex-1 flex-col justify-end'>
+					  <UpgradeCard />
+					</div>
+				</SubscriptionPlan>
 			</div>
 		</div>
 	)
