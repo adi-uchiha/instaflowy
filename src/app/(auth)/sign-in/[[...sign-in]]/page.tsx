@@ -4,7 +4,9 @@ import React from 'react'
 type Props = {}
 
 const Page = (props: Props) => {
-	return <SignIn />
+	return <div>
+		<SignIn />
+	</div>
 }
 
 export default Page
