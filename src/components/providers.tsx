@@ -14,7 +14,7 @@ export function Providers({ children }: { children: ReactNode }) {
      * make sure you change it in the localStorage.getItem too.
      * default key is "theme"
      */
-    const actualTheme = localStorage.getItem('your-storage-key-theme')
+    const actualTheme = localStorage.getItem('theme')
     setTheme(actualTheme || 'system')
   }, [setTheme])
 
@@ -22,7 +22,7 @@ export function Providers({ children }: { children: ReactNode }) {
     <ClerkProvider
       publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY!}
       appearance={{
-        baseTheme: dark
+        baseTheme: resolvedTheme === 'dark' ? dark : undefined
       }}
       afterSignOutUrl="/"
     >
