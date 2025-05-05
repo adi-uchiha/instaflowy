@@ -5,6 +5,7 @@ import { redirect } from "next/navigation"
 import { createUser, findUser } from "./queries"
 import { refreshToken } from "@/lib/fetch"
 import { updateIntegration } from "../integrations/queries"
+import { client } from '@/lib/prisma'
 
 export const onCurrentUser = async () => {
 	const user = await currentUser()
@@ -14,54 +15,68 @@ export const onCurrentUser = async () => {
 }
 
 export const onBoardUser = async () => {
-	const user = await onCurrentUser()
-	try {
-		const found = await findUser(user.id)
-		if (found) {
-			if (found.integrations.length > 0) {
-				const today = new Date()
-				const time_left =
-					found.integrations[0].expiresAt?.getTime()! - today.getTime()
+  try {
+    // Ensure Prisma is initialized
+    if (!client) {
+      throw new Error('Database client not initialized')
+    }
 
-				const days = Math.round(time_left / (1000 * 3600 * 24))
-				if (days < 5) {
-					console.log("Refreshing")
+    const user = await onCurrentUser()
+    try {
+      const found = await findUser(user.id)
+      if (found) {
+        if (found.integrations.length > 0) {
+          const today = new Date()
+          const time_left =
+            found.integrations[0].expiresAt?.getTime()! - today.getTime()
 
-					const refresh = await refreshToken(
-						found.integrations[0].token!
-					)
+          const days = Math.round(time_left / (1000 * 3600 * 24))
+          if (days < 5) {
+            console.log("Refreshing")
 
-					const today = new Date()
-					const expire_date = today.setDate(today.getDate() + 60)
+            const refresh = await refreshToken(
+              found.integrations[0].token!
+            )
 
-					const update_token = await updateIntegration(
-						refresh.access_token,
-						new Date(expire_date),
-						found.integrations[0].id
-					)
+            const today = new Date()
+            const expire_date = today.setDate(today.getDate() + 60)
 
-					if (!update_token) {
-						console.log("Update token failed")
-					}
-				}
-			}
-			return {
-				status: 200,
-				data: {
-					firstname: found.firstname,
-					lastname: found.lastname,
-				}
-			}
-		}
-		const created = await createUser(
-			user.id,
-			user.firstName!,
-			user.lastName!,
-			user.emailAddresses[0].emailAddress
-		)
-		return { status: 201, data: created }
-	} catch (error) {
-		console.log(error)
-		return { staus: 500 }
-	}
+            const update_token = await updateIntegration(
+              refresh.access_token,
+              new Date(expire_date),
+              found.integrations[0].id
+            )
+
+            if (!update_token) {
+              console.log("Update token failed")
+            }
+          }
+        }
+        return {
+          status: 200,
+          data: {
+            firstname: found.firstname,
+            lastname: found.lastname,
+          }
+        }
+      }
+      const created = await createUser(
+        user.id,
+        user.firstName!,
+        user.lastName!,
+        user.emailAddresses[0].emailAddress
+      )
+      return { status: 201, data: created }
+    } catch (error) {
+      console.log(error)
+      return { staus: 500 }
+    }
+  } catch (error) {
+    console.error('Database error:', error)
+    return {
+      status: 500,
+      data: null,
+      error: 'Database connection failed'
+    }
+  }
 }

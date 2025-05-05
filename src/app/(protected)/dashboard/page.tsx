@@ -1,6 +1,5 @@
 import { onBoardUser } from '@/actions/user'
 import { redirect } from 'next/navigation'
-import React from 'react'
 
 type Props = {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
