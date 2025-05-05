@@ -252,11 +252,12 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://instaflowy-dev_owner:npg_ncFVL5Z3tgeM@ep-still-unit-a4butuii-pooler.us-east-1.aws.neon.tech/instaflowy-dev?sslmode=require"
+        "value": null
       }
     }
   },
