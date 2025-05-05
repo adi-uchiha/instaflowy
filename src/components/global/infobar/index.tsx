@@ -15,7 +15,7 @@ import LogoSmall from '@/components/svgs/logo-small'
 import CreateAutomation from '../create-automation'
 import Search from './search'
 import Notifications from './notifications'
-import MainBreadCrumb from '../main-bread-cumb'
+import MainBreadCrumb from '../bread-crumbs/main-bread-cumb'
 
 
 type Props = {
