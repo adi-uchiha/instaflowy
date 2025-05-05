@@ -1,10 +1,15 @@
 import Billing from '@/components/global/billing'
 import React from 'react'
 
-type Props = {}
+type Props = {
+  params: {
+    slug: string;
+  };
+  searchParams?: { [key: string]: string | string[] | undefined };
+}
 
-const Page = (props: Props) => {
-	return <Billing />
+const Page = async ({ params }: Props) => {
+  return <Billing />
 }
 
 export default Page
