@@ -3,8 +3,8 @@ import Sidebar from '@/components/global/sidebar'
 import React from 'react'
 
 type Props = {
-	children: React.ReactNode
-	params: {slug: string}
+	children: React.ReactNode;
+	params: Promise<{ slug: string }>;
 }
 
 const Layout = async ({ children, params }: Props) => {

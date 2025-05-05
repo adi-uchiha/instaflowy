@@ -1,11 +1,15 @@
 import React from 'react'
 
-type Props = {}
+type Props = {
+  params: Promise<{ slug: string }>;
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+}
 
-const Page = (props: Props) => {
-	return (
-		<div>Dashboard Slug</div>
-	)
+const Page = async ({ params }: Props) => {
+  const { slug } = await params
+  return (
+    <div>Dashboard {slug}</div>
+  )
 }
 
 export default Page

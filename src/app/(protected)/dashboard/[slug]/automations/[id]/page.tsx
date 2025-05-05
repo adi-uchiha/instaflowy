@@ -4,23 +4,25 @@ import React from 'react'
 import { InfoIcon } from 'lucide-react'
 
 type Props = {
-  params: {
+  params: Promise<{
     slug: string;
     id: string;
-  };
-  searchParams?: { [key: string]: string | string[] | undefined };
+  }>;
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-const Page = async ({params}: Props) => {
+const Page = async ({ params }: Props) => {
+  const { id } = await params
+  
   return (
     <div className="flex flex-col items-center gap-y-20">
-      <AutomationsBreadCrumb id={params.id} />
+      <AutomationsBreadCrumb id={id} />
       <div className="w-full lg:w-10/12 xl:w-6/12 p-5 rounded-xl flex flex-col bg-[#1D1D1D] gap-y-3">
         <div className="flex gap-x-2">
           <InfoIcon className='text-blue-900' />
           When...
         </div>
-        <Trigger id={params.id} />
+        <Trigger id={id} />
       </div>
     </div>
   )
