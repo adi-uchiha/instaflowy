@@ -4,7 +4,10 @@ import React from 'react'
 import { InfoIcon } from 'lucide-react'
 
 type Props = {
-	params : {id: string}
+	params: {
+		slug: string;
+		id: string;
+	}
 }
 
 const Page = ({params}: Props) => {
