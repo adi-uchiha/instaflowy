@@ -48,7 +48,7 @@ export const onBoardUser = async () => {
 			return {
 				status: 200,
 				data: {
-					fristname: found.firstname,
+					firstname: found.firstname,
 					lastname: found.lastname,
 				}
 			}
