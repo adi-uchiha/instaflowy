@@ -2,20 +2,41 @@
 import { usePath } from '@/hooks/user-nav'
 import { cn, getMonth } from '@/lib/utils'
 import Link from 'next/link'
-import React from 'react'
+import React, { useMemo } from 'react'
 import GradientButton from '../gradient-button'
 import { Button } from '@/components/ui/button'
 import { useQueryAutomations } from '@/hooks/use-queries'
 import CreateAutomation from '../create-automation'
+import { useMutationDataState } from '@/hooks/use-mutation-data'
 
 type Props = {}
 
 const AutomationList = (props: Props) => {
+	const { data } = useQueryAutomations()
+	const latestVariable = useMutationDataState(['create-automation'])
 	const { pathname } = usePath()
 
-	const { data } = useQueryAutomations()
+	const optimisticUiData = useMemo(() => {
+		if (!data || data.status !== 200) return { data: [] }
+		
+		// Get the response data from mutation state
+		const response = latestVariable?.state?.data as { status: number; tempId: string }
 
-	if (data?.status !== 200 || data.data.length <= 0) {
+		// If we have a successful response, don't show the temporary entry
+		if (response?.status === 200 && latestVariable?.variables?.id === response.tempId) {
+			return data
+		}
+
+		// Show optimistic entry only if we don't have a success response yet
+		if (latestVariable?.variables && latestVariable?.state?.status !== 'success') {
+			const optimisticData = latestVariable.variables
+			return { data: [optimisticData, ...data.data] }
+		}
+
+		return data
+	}, [latestVariable?.variables, latestVariable?.state?.status, latestVariable?.state?.data, data])
+
+	if (!data || data.status !== 200 || data.data.length <= 0) {
 		return <div className='h-70vh flex justify-center items-center flex-col gap-y-3 '>
 			<h3 className='text-lg text-gray-400'>
 				No Automations
@@ -26,10 +47,14 @@ const AutomationList = (props: Props) => {
 
 	return (
 		<div className='flex flex-col gap-y-3'>
-			{data.data!.map((automation) => (
-				<Link href={`${pathname}/${automation.id}`}
+			{optimisticUiData.data!.map((automation) => (
+					<Link 
+					href={automation.isTemporary ? '#' : `${pathname}/${automation.id}`}
 					key={automation.id}
-					className='bg-[#1d1d1d] hover:opacity-80 transition duration-100 rounded-xl p-5 border-[1px] bg-gradient-to-b flex border-[#545454]'
+					className={cn(
+						'bg-[#1d1d1d] hover:opacity-80 transition duration-100 rounded-xl p-5 border-[1px] bg-gradient-to-b flex border-[#545454]',
+						automation.isTemporary && 'opacity-50'
+					)}
 				>
 					<div className='flex flex-col flex-1 items-start'>
 						<h2 className='text-xl font-semibold'>
