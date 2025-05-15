@@ -7,6 +7,7 @@ type Props = {
 }
 
 const AutomationsBreadCrumb = ({ id }: Props) => {
+	
 	return (
 		<div className='rounded-full w-full p-5 bg-[#18181b1a] flex items-center'>
 			<div className='flex items-center gap-x-3 min-w-0'>
