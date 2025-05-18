@@ -1,6 +1,6 @@
 'use client'
 
-import { createAutomations, saveKeyword, saveListener, saveTrigger, updateAutomationName } from "@/actions/automations"
+import { createAutomations, deleteKeyword, saveKeyword, saveListener, saveTrigger, updateAutomationName } from "@/actions/automations"
 import { useMutationData } from "./use-mutation-data"
 import { useEffect, useRef, useState } from "react"
 import { z } from 'zod'
@@ -119,5 +119,14 @@ export const useKeywords = (id: string) => {
 		}
 	}
 
-	
-}
+	const { mutate: deleteMutation } = useMutationData(
+		['delete-keyword'],
+		(data: { id: string }) => deleteKeyword(data.id),
+		'automation-info',
+		() => setKeyword('')
+	)
+
+	return { keyword, onValueChange, onKeyPress, deleteMutation }
+
+
+}  

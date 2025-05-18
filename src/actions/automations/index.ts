@@ -1,7 +1,7 @@
 'use server'
 
 import { onCurrentUser } from "../user"
-import { addKeyword, addListener, addTrigger, createAutomation, findAutomation, getAutomations, updateAutomation } from "./queries"
+import { addKeyword, addListener, addTrigger, createAutomation, deleteKeywordQuery, findAutomation, getAutomations, updateAutomation } from "./queries"
 import { v4 } from 'uuid'
 
 export const createAutomations = async (tempId?: string) => {
@@ -84,7 +84,8 @@ export const saveTrigger = async (automationId: string, trigger: string[]) => {
 	await onCurrentUser()
 	try {
 		const create = await addTrigger(automationId, trigger)
-		if (create) return { status: 404, data: 'Cannot save the tirgger!' }
+		if (create) return { status: 200, data: 'Save trigger successfull' }
+		return { status: 404, data: 'Cannot add the trigger!' }
 	} catch (error) {
 		return { status: 500, data: 'Oops! something went wrong' }
 	}
@@ -95,9 +96,22 @@ export const saveKeyword = async (automationId: string, keyword: string) => {
 	await onCurrentUser()
 	try {
 		const create = await addKeyword(automationId, keyword)
-		if (create) return { status: 404, data: 'Cannot add the keyword!' }
+		if (create) return { status: 200, data: 'Keyword added successfully' }
+		return { status: 404, data: 'Cannot add the keyword!' }
 	} catch (error) {
 		return { status: 500, data: 'Oops! something went wrong' }
 	}
 }
 
+export const deleteKeyword = async (id: string) => {
+	await onCurrentUser()
+	try {
+		const deleted = await deleteKeywordQuery(id)
+		if (deleted) {
+			return { status: 200, data: 'Keyword deleted successfully' }
+		}
+		return { status: 404, data: 'Cannot delete the keyword!' }
+	} catch (error) {
+		return { status: 500, data: 'Oops! something went wrong' }
+	}
+}

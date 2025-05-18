@@ -136,3 +136,11 @@ export const addKeyword = async (automationId: string, keyword: string) => {
 		}
 	})
 }
+
+export const deleteKeywordQuery = async (id: string) => {
+	return client.keyword.delete({
+		where: {
+			id
+		}
+	})
+}
