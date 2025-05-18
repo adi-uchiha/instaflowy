@@ -1,4 +1,4 @@
-import { BrainIcon, SendIcon } from "lucide-react"
+import { BrainIcon, InstagramIcon, SendIcon } from "lucide-react"
 import { JSX } from "react"
 import { v4 } from "uuid"
 
@@ -9,6 +9,31 @@ export type AutomationListenerProps = {
 	description: string
 	type: 'SMARTAI' | 'MESSAGE'
 }
+
+export type AutomationTriggerProps = {
+	id: string
+	label: string
+	icon: JSX.Element
+	description: string
+	type: 'COMMENT' | 'DM'
+}
+
+export const AUTOMATION_TRIGGERS: AutomationTriggerProps[] = [
+	{
+		id: v4(),
+		label: 'User comments on my post',
+		icon: <InstagramIcon />,
+		description: 'Select if you want to automate comments on your post',
+		type: 'COMMENT'
+	},
+	{
+		id: v4(),
+		label: 'Send me a DM with a keyword',
+		icon: <InstagramIcon />,
+		description: 'Select if you want to automate DMs on your profile',
+		type: 'DM'
+	},
+]
 
 export const AUTOMATION_LISTENERS: AutomationListenerProps[] = [
 	{

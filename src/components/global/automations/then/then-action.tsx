@@ -4,6 +4,10 @@ import TriggerButton from '../trigger-button'
 import { AUTOMATION_LISTENERS } from '@/constants/automation'
 import { SubscriptionPlan } from '../../subscription-plan'
 import { cn } from '@/lib/utils'
+import { Textarea } from '@/components/ui/textarea'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import Loader from '../../loader'
 
 type Props = {
 	id: string
@@ -50,6 +54,27 @@ const ThenAction = ({ id }: Props) => {
 				)
 
 			)}
+			<form onSubmit={onFormSubmit}
+				className='flex flex-col gap-y-2'
+			>
+				<Textarea
+					placeholder={
+						Listener === 'SMARTAI'
+							? 'Add a prompt that your smart ai can use...'
+							: 'Add a messafe you want send to your customers'
+					}
+					{...register('prompt')}
+					className='bg-background/80 outline-none border-none ring-0 focus:ring-0'
+				/>
+				<Input
+					{...register('reply')}
+					placeholder='Add a reply for comments (Optional)'
+					className='bg-background/80 outline-none border-none ring-0 focus:ring-0'
+				/>
+				<Button className='bg-gradient-to-br w-full form-[#3352cc] font-medium text-white to-[#1c2d70]'>
+					<Loader state={isPending}>Add listener</Loader>
+				</Button>
+			</form>
 		</div>
 	</TriggerButton>
 }

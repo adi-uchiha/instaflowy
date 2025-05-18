@@ -1,10 +1,13 @@
 'use client'
 
-import { createAutomations, saveListener, updateAutomationName } from "@/actions/automations"
+import { createAutomations, saveKeyword, saveListener, saveTrigger, updateAutomationName } from "@/actions/automations"
 import { useMutationData } from "./use-mutation-data"
 import { useEffect, useRef, useState } from "react"
 import { z } from 'zod'
 import useZodForm from "./use-zod-form"
+import { AppDispatch, useAppSelector } from "@/redux/store"
+import { useDispatch } from "react-redux"
+import { TRIGGER } from "@/redux/slices/automation"
 export const useCreateAutomation = (tempId: string) => {
 	const { isPending, mutate: originalMutate } = useMutationData(
 		['create-automation'],
@@ -59,7 +62,7 @@ export const useEditAutomation = (automationId: string) => {
 }
 
 export const useListener = (id: string) => {
-	const [listener, setListener] = useState<"MESSAGE" | "SMARTAI">('MESSAGE')
+	const [listener, setListener] = useState<"MESSAGE" | "SMARTAI" | null>(null)
 
 	const promptSchema = z.object({
 		prompt: z.string().min(1),
@@ -69,7 +72,7 @@ export const useListener = (id: string) => {
 	const { isPending, mutate } = useMutationData(
 		['create-lister'],
 		(data: { prompt: string; reply: string }) =>
-			saveListener(id, listener, data.prompt, data.reply),
+			saveListener(id, listener || 'MESSAGE', data.prompt, data.reply),
 		'automation-info'
 	)
 
@@ -80,4 +83,41 @@ export const useListener = (id: string) => {
 
 	const onSetListener = (type: "SMARTAI" | "MESSAGE") => setListener(type)
 	return { onSetListener, register, onFormSubmit, listener, isPending }
+}
+
+export const useTriggers = (id: string) => {
+	const types = useAppSelector((state) => state.AutomationReducer.trigger?.types)
+
+	const dispatch: AppDispatch = useDispatch()
+
+	const onSetTrigger = (type: 'COMMENT' | 'DM') =>
+		dispatch(TRIGGER({ trigger: { type } }))
+
+	const { isPending, mutate } = useMutationData(['add-trigger'], (data: { types: string[] }) => saveTrigger(id, data.types),
+		'automation-info',
+	)
+
+	const onSaveTrigger = () => mutate({ types })
+	return { types, onSetTrigger, onSaveTrigger, isPending }
+}
+
+export const useKeywords = (id: string) => {
+	const [keyword, setKeyword] = useState('')
+	const onValueChange = (e: React.ChangeEvent<HTMLInputElement>) => setKeyword(e.target.value)
+
+	const { mutate } = useMutationData(
+		['add-keyword'],
+		(data: { keyword: string }) => saveKeyword(id, data.keyword),
+		'automation-info',
+		() => setKeyword('')
+	)
+
+	const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === 'Enter') {
+			mutate({ keyword })
+			setKeyword('')
+		}
+	}
+
+	
 }
