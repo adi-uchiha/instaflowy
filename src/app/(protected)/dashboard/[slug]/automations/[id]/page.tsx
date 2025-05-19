@@ -5,6 +5,7 @@ import { InfoIcon } from 'lucide-react'
 import { getAutomationInfo } from '@/actions/automations'
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
 import { PrefetchUserAutomation } from '@/react-query/prefetch'
+import ThenNode from '@/components/global/automations/then/then-node'
 
 type Props = {
   params: Promise<{
@@ -43,6 +44,7 @@ const Page = async ({ params }: Props) => {
           </div>
           <Trigger id={id} />
         </div>
+        <ThenNode id={id} />
       </div>
     </HydrationBoundary>
   )
