@@ -4,6 +4,7 @@ import { Separator } from '@/components/ui/separator'
 import { useQueryAutomation } from '@/hooks/use-queries'
 import { BrainIcon, InfoIcon, SendIcon } from 'lucide-react'
 import React from 'react'
+import PostButton from '../post'
 
 type Props = {
 	id: string
@@ -31,12 +32,25 @@ const ThenNode = ({ id }: Props) => {
 		<div className='bg-background-80 p-3 rounded-xl flex flex-col gap-y-2'>
 			<div>
 				{data.data.listener.listener === 'MESSAGE' ? (
-					<SendIcon /> 
+					<SendIcon />
 				) : (
 					<BrainIcon />
 				)}
+				<p className='text-lg'>
+					{data.data.listener.listener === 'MESSAGE'
+						? 'Send the user a message'
+						: 'Let Smart AI take over'}
+				</p>
 			</div>
+			<p className='font-light text-muted-foreground'>
+				{data.data.listener.prompt}
+			</p>
 		</div>
+		{data.data.posts.length > 0
+			? <></>
+			: commentTrigger
+				? <PostButton id={id} />
+				: <></>}
 	</div>
 }
 
