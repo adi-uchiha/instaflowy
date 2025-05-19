@@ -19,7 +19,8 @@ const eslintConfig = [
       "no-var": "off",
       "prefer-const": "off",  //For usePath()
       "@typescript-eslint/no-empty-object-type": "off", // For empty Props types
-      "@typescript-eslint/no-non-null-asserted-optional-chain": "off" // For optional chaining
+      "@typescript-eslint/no-non-null-asserted-optional-chain": "off", // For optional chaining
+      "@typescript-eslint/no-explicit-any": "off"
     }
   }
 ];

@@ -35,7 +35,7 @@ const ThenNode = ({ id }: Props) => {
 					<SendIcon />
 				) : (
 					<BrainIcon />
-				)}
+				)} 
 				<p className='text-lg'>
 					{data.data.listener.listener === 'MESSAGE'
 						? 'Send the user a message'

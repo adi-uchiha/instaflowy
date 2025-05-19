@@ -6,6 +6,7 @@ import { getAutomationInfo } from '@/actions/automations'
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
 import { PrefetchUserAutomation } from '@/react-query/prefetch'
 import ThenNode from '@/components/global/automations/then/then-node'
+import PostNode from '@/components/global/automations/post/node'
 
 type Props = {
   params: Promise<{
@@ -45,6 +46,7 @@ const Page = async ({ params }: Props) => {
           <Trigger id={id} />
         </div>
         <ThenNode id={id} />
+        <PostNode id={id} />
       </div>
     </HydrationBoundary>
   )
