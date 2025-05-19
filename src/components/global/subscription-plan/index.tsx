@@ -1,3 +1,5 @@
+'use client'
+
 import { useQueryUser } from "@/hooks/use-queries"
 
 type Props = {
