@@ -242,7 +242,7 @@ export async function POST(req: NextRequest) {
 								role: 'assistant',
 								content: `${automation.listener?.prompt} : keep responses under 2 sentences`,
 							},
-							// ...customer_history.history,
+							...customer_history.history,
 							{
 								role: 'user',
 								content: webhook_payload.entry[0].messaging[0].message.text,

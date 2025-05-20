@@ -101,7 +101,6 @@ export const getKeywordPost = async (postId: string, automationId: string) => {
 }
 
 export const getChatHistory = async (sender: string, reciever: string) => {
-  // Fetch all DMs between sender and receiver (in both directions)
   const messages = await client.dms.findMany({
     where: {
       OR: [
@@ -126,9 +125,9 @@ export const getChatHistory = async (sender: string, reciever: string) => {
     };
   }
 
-  // Format for OpenAI: sender is 'user', other is 'assistant'
+  // Explicitly type the role for OpenAI
   const history = messages.map(msg => ({
-    role: msg.senderId === sender ? 'user' : 'assistant',
+    role: msg.senderId === sender ? 'user' as const : 'assistant' as const,
     content: msg.message || ''
   }));
 
