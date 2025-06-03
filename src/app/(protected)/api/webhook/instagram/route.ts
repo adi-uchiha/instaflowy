@@ -290,21 +290,21 @@ export async function POST(req: NextRequest) {
 				{
 					message: 'No automation set',
 				},
-				{ status: 404 }
+				{ status: 200 }
 			)
 		}
 		return NextResponse.json(
 			{
 				message: 'No automation set',
 			},
-			{ status: 404 }
+			{ status: 200 }
 		)
 	} catch (error) {
 		return NextResponse.json(
 			{
 				message: 'Error 500: No automation set',
 			},
-			{ status: 500 }
+			{ status: 200 }
 		)
 	}
 }
