@@ -7,7 +7,7 @@ import {
 	matchKeyword,
 	trackResponse
 } from '@/actions/webhook/queries'
-import { sendDM } from '@/lib/fetch'
+import { sendDM, sendPrivateMessage } from '@/lib/fetch'
 import client from '@/lib/prisma'
 import { openai } from '@/lib/utils'
 import { NextRequest, NextResponse } from 'next/server'
@@ -146,9 +146,9 @@ export async function POST(req: NextRequest) {
 				if (automation && automation_post && automation.trigger) {
 					if (automation.listener) {
 						if (automation.listener.listener === 'MESSAGE') {
-							const direct_message = await sendDM(
+							const direct_message = await sendPrivateMessage(
 								webhook_payload.entry[0].id,
-								webhook_payload.entry[0].changes[0].value.from.id,
+								webhook_payload.entry[0].changes[0].value.id,
 								automation.listener?.prompt,
 								automation.user?.integrations[0].token!
 							)
