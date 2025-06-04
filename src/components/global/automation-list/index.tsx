@@ -18,7 +18,7 @@ const AutomationList = (props: Props) => {
 
 	const optimisticUiData = useMemo(() => {
 		if (!data || data.status !== 200) return { data: [] }
-		
+
 		// Get the response data from mutation state
 		const response = latestVariable?.state?.data as { status: number; tempId: string }
 
@@ -48,7 +48,7 @@ const AutomationList = (props: Props) => {
 	return (
 		<div className='flex flex-col gap-y-3'>
 			{optimisticUiData.data!.map((automation) => (
-					<Link 
+				<Link
 					href={automation.isTemporary ? '#' : `${pathname}/${automation.id}`}
 					key={automation.id}
 					className={cn(
@@ -65,34 +65,27 @@ const AutomationList = (props: Props) => {
 						</p>
 						{automation.keywords.length > 0 ? (
 							<div className='flex gap-x-2 flex-wrap mt-3'>
-								<div className={cn(
-									'rounded-full px-4 py-1 capitalize',
-									(0 + 1) % 1 == 0 &&
-									'bg-[#1e7f2086] border-1 border-green-500'
-								)}>
-									getstarted
-								</div>
-								<div className={cn(
-									'rounded-full px-4 py-1 capitalize',
-									(0 + 1) % 1 == 0 &&
-									'bg-purple-950 border-1 border-purple-500'
-								)}>
-									getstarted
-								</div>
-								<div className={cn(
-									'rounded-full px-4 py-1 capitalize',
-									(0 + 1) % 1 == 0 &&
-									'bg-yellow-950 border-1 border-yellow-500'
-								)}>
-									getstarted
-								</div>
-								<div className={cn(
-									'rounded-full px-4 py-1 capitalize',
-									(0 + 1) % 1 == 0 &&
-									'bg-red-950 border-1 border-red-500'
-								)}>
-									getstarted
-								</div>
+
+								{
+									// @ts-ignore
+									automation.keywords.map((keyword, key) => (
+										<div key={keyword.id}
+											className={cn(
+												'rounded-full px-4 py-1 capitalize',
+												(0 + 1) % 1 == 0 &&
+												'bg-keyword-green/15 border-2 border-keyword-green',
+												(1 + 1) % 2 == 0 &&
+												'bg-keyword-purple/15 border-2 border-keyword-purple',
+												(2 + 1) % 3 == 0 &&
+												'bg-keyword-yellow/15 border-2 border-keyword-yellow',
+												(3 + 1) % 4 == 0 &&
+												'bg-keyword-red/15 border-2 border-keyword-red'
+											)}
+										>
+											{keyword.word}
+										</div>
+									))}
+
 							</div>
 						) :
 							(<div className='rounded-full border-2 mt-3 border-dashed border-white/60 px-3 py-1'>

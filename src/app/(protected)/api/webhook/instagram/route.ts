@@ -207,12 +207,12 @@ export async function POST(req: NextRequest) {
 
 								await client.$transaction([reciever, sender])
 
-								const direct_message = await sendDM(
-									webhook_payload.entry[0].id,
-									webhook_payload.entry[0].changes[0].value.from.id,
-									smart_ai_message.choices[0].message.content,
-									automation.user?.integrations[0].token!
-								)
+								const direct_message = await sendPrivateMessage(
+								webhook_payload.entry[0].id,
+								webhook_payload.entry[0].changes[0].value.id,
+								automation.listener?.prompt,
+								automation.user?.integrations[0].token!
+							)
 
 								console.log('DM API response:', direct_message)
 
