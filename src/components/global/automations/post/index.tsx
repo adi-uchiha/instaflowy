@@ -27,14 +27,14 @@ const PostButton = ({ id }: Props) => {
 						<div className='relative w-4/12 aspect-square rounded-lg cursor-pointer overflow-hidden'
 							key={post.id}
 							onClick={() => onSelectPost({
-								postid: post.id,
+								postId: post.id,
 								media: post.media_url,
 								mediaType: post.media_type,
 								caption: post.caption
 							})
 							}
 						>
-							{posts.find((p) => p.postid === post.id) && (
+							{posts.find((p) => p.postId === post.id) && (
 								<CheckIcon
 									fill='white'
 									stroke='black'
@@ -44,7 +44,7 @@ const PostButton = ({ id }: Props) => {
 							<Image fill sizes='100vw' src={post.media_url} alt='Post Image'
 								className={cn('hover:opacity-75 transition duration-100',
 									posts.find(
-										(p) => p.postid === post.id,
+										(p) => p.postId === post.id,
 									) && 'opacity-75'
 								)}
 							/>

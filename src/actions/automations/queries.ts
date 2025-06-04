@@ -148,7 +148,7 @@ export const deleteKeywordQuery = async (id: string) => {
 export const addPost = async (
 	automationId: string,
 	posts: {
-		postid: string
+		postId: string
 		caption?: string
 		media: string
 		mediaType: 'IMAGE' | 'VIDEO' | 'CAROSEL_ALBUM'
@@ -161,8 +161,13 @@ export const addPost = async (
 		data: {
 			posts: {
 				createMany: {
-					data: posts
-				}
+          data: posts.map(post => ({
+            postId: post.postId,
+            caption: post.caption,
+            media: post.media,
+            mediaType: post.mediaType
+          }))
+        }
 			}
 		}
 	})

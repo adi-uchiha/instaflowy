@@ -9,10 +9,12 @@ import {
 } from '@/actions/webhook/queries'
 import { sendDM, sendPrivateMessage } from '@/lib/fetch'
 import client from '@/lib/prisma'
-import { openai } from '@/lib/utils'
 import { NextRequest, NextResponse } from 'next/server'
+import OpenAI from 'openai'
 
-
+export const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+})
 
 
 

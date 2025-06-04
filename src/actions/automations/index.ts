@@ -139,7 +139,7 @@ export const getProfilePosts = async () => {
 export const savePosts = async (
 	automationId: string,
 	posts: {
-		postid: string
+		postId: string
 		caption?: string
 		media: string
 		mediaType: 'IMAGE' | 'VIDEO' | 'CAROSEL_ALBUM'
