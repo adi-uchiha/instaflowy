@@ -63,7 +63,7 @@ const InfoBar = ({ slug }: Props) => {
 									<UpgradeCard />
 								</div>
 							</SubscriptionPlan>
-						</div>
+						</div> 
 					</Sheet>
 				</span>
 				<Search />
