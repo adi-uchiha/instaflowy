@@ -51,7 +51,7 @@ export default function PrivacyPolicy() {
               <ol className="list-decimal pl-6 space-y-2">
                 <li>Log in to your Instaflowy dashboard</li>
                 <li>Go to Account Settings</li>
-                <li>Click on "Delete Account & Data"</li>
+                <li>Click on &quot;Delete Account & Data&quot;</li>
                 <li>Confirm deletion</li>
               </ol>
             </div>
@@ -59,7 +59,7 @@ export default function PrivacyPolicy() {
             <div>
               <h4 className="font-medium">Option 2: Contact Support</h4>
               <p>
-                Email us at support@instaflowy.com with subject "Data Deletion Request" 
+                Email us at support@instaflowy.com with subject &quot;Data Deletion Request&quot; 
                 including your account email and Instagram handle.
               </p>
             </div>
