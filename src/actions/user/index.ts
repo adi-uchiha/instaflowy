@@ -6,7 +6,8 @@ import { createUser, findUser, updateSubscription } from "./queries"
 import { refreshToken } from "@/lib/fetch"
 import { updateIntegration } from "../integrations/queries"
 import { client } from '@/lib/prisma'
-import { stripe } from "@/app/(protected)/api/payment/route"
+import { stripe } from "@/lib/stripe"
+
 
 export const onCurrentUser = async () => {
 	const user = await currentUser()
@@ -110,5 +111,5 @@ export const onSubscribe = async (session_id: string) => {
 		return { status: 404 }
 	} catch (error) {
 		return { status: 500 }
-	}
+	} 
 }
