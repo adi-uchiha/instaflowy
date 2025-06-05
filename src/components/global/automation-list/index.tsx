@@ -67,7 +67,7 @@ const AutomationList = (props: Props) => {
 							<div className='flex gap-x-2 flex-wrap mt-3'>
 
 								{
-									// @ts-ignore
+									// @ts-expect-error
 									automation.keywords.map((keyword, key) => (
 										<div key={keyword.id}
 											className={cn(
