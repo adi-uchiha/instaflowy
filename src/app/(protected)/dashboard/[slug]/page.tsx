@@ -1,3 +1,5 @@
+'use client'
+
 import DoubleGradientCard from '@/components/global/double-gradient-card';
 import { DASHBOARD_CARDS } from '@/constants/dashboard';
 import { ChartBarIcon } from 'lucide-react';
@@ -11,8 +13,7 @@ type Props = {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-const Page = async ({ params }: Props) => {
-  const { slug } = await params
+const Page = ({ params }: Props) => {
   return (
     <div className='flex flex-col gap-y-10'>
       <div className='flex gap-5 lg:flex-row flex-col'>
