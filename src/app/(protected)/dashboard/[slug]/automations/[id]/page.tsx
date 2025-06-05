@@ -16,16 +16,16 @@ type Props = {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-export async function generateMetaData({
-  params,
-}: {
-  params: { id: string }
-}) {
-  const info = await getAutomationInfo(params.id)
-  return {
-    title: info.data?.name,
-  }
-}
+// export async function generateMetaData({
+//   params,
+// }: {
+//   params: { id: string }
+// }) {
+//   const info = await getAutomationInfo(params.id)
+//   return {
+//     title: info.data?.name,
+//   }
+// }
 
 const Page = async ({ params }: Props) => {
   const { id } = await params
