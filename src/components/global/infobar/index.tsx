@@ -58,7 +58,7 @@ const InfoBar = ({ slug }: Props) => {
 									<p className='text-[#9B9CA0]'>Help</p>
 								</div>
 							</div>
-							<SubscriptionPlan >
+							<SubscriptionPlan type='FREE'>
 								<div className='flex flex-1 flex-col justify-end'>
 									<UpgradeCard />
 								</div>
